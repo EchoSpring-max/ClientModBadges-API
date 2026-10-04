@@ -1,6 +1,8 @@
-# ClientModBadges-API
+# ClientModBadges Static API
 
-This API allows you to retrieve user badges for various discord client mods.
+This fork provides badge data and images without requiring a continuously running server. GitHub Actions refreshes the data every hour and GitHub's raw-content CDN serves it to the matching GlobalBadges plugin.
+
+The companion plugin is available at [EchoSpring-max/GlobalBadges](https://github.com/EchoSpring-max/GlobalBadges).
 
 ### Supported client mods:
 
@@ -11,15 +13,17 @@ This API allows you to retrieve user badges for various discord client mods.
 - [Replugged](https://github.com/replugged-org/replugged)
 - [Vencord](https://github.com/Vendicated/Vencord)
 
-### API URL
+### Static endpoints
 
-```
-https://api.domi-btnr.dev/clientmodbadges/
-```
+`https://raw.githubusercontent.com/EchoSpring-max/ClientModBadges-API/main/users/:userId.json` returns badges for a user.
 
-### Endpoints
+`https://raw.githubusercontent.com/EchoSpring-max/ClientModBadges-API/main/badges/:clientMod/:badge.png` returns a built-in badge image.
 
-`/users/:userId` Returns the badges for the user
+For example:
+
+`https://raw.githubusercontent.com/EchoSpring-max/ClientModBadges-API/main/users/354191516979429376.json`
+
+### Response format
 
 Example Response:
 
@@ -39,10 +43,6 @@ Example Response:
     ]
 }
 ```
-
-`/badges/:clientMod/:badge` Returns the badge icon
-
-The response will be the badge icon in `image/png` format.
 
 ## Contributing
 

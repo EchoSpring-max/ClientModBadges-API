@@ -5,13 +5,20 @@ on:
   schedule:
     - cron: "0 */1 * * *"
 
+permissions:
+  contents: write
+
+concurrency:
+  group: update-badges
+  cancel-in-progress: false
+
 jobs:
   update-badges:
     name: Update Badges
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@master
+        uses: actions/checkout@v4
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -27,6 +34,9 @@ jobs:
       
       - name: Install dependencies
         run: pnpm install
+
+      - name: Test updater
+        run: pnpm test
 
       - name: Clear Badges
         run: rm -rf users && mkdir users
@@ -57,10 +67,3 @@ jobs:
           git add .
           git commit -m "Updated Badges" || exit 0
           git push
-
-  update-badges-for-api:
-    name: Update Badges for API
-    runs-on: self-hosted
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@master
